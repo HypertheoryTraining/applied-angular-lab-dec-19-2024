@@ -46,6 +46,10 @@ import { PostsStore } from '../services/post-store';
             <p class="text-lg  font-semibold">
               {{ post.description }}
             </p>
+            @if (post.pending) {
+              <p>saving your post....</p>
+              <div class="skeleton h-4 w-full"></div>
+            }
             <p>
               <span class="font-bold">Posted By: </span>
               <a
