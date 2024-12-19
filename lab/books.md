@@ -15,6 +15,7 @@ We would like to display just the id, title, author and year of each book. Maybe
 in a table, or some grid like structure. See what works for you.
 
 You can do pretty much _all_ of this in the component.
+,
 
 ### Pretend like this is the future, and "business" wants something else.
 
