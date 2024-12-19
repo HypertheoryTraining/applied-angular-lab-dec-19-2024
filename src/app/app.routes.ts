@@ -9,6 +9,11 @@ import { CounterStore } from './areas/counter-redo/services/counter.store';
 // Modes within our application.
 export const routes: Routes = [
   {
+    path: 'books',
+    loadChildren: () =>
+      import('./areas/book-lab/book.routes').then((r) => r.BOOKS_ROUTES),
+  },
+  {
     path: 'lrc',
     canMatch: [canMatchFeature('lrc')],
     loadChildren: () =>
