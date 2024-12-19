@@ -40,4 +40,9 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'books',
+    loadChildren: () =>
+      import('./areas/books/books.routes').then((r) => r.BOOKS_ROUTES),
+  },
 ];

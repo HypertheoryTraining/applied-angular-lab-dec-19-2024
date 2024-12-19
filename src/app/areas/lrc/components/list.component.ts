@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RelativeTimeComponent } from '@shared';
 import { map } from 'rxjs';
-import { PostApi } from '../services/post-api';
+
 import { PostsStore } from '../services/post-store';
 @Component({
   selector: 'app-lrc-list',
@@ -46,22 +46,31 @@ import { PostsStore } from '../services/post-store';
             <p class="text-lg  font-semibold">
               {{ post.description }}
             </p>
-            <p>
-              <span class="font-bold">Posted By: </span>
-              <a
-                class="link"
-                routerLink="."
-                [queryParams]="{ filter: post.postedBy }"
-              >
-                {{ post.postedBy }}
-              </a>
-            </p>
-            <p>
-              {{ post.datePosted | date: 'medium' }}
-              <span class="text-sm   from-neutral-100 font-extralight">
-                (<app-relative-time [date]="post.datePosted" />)
-              </span>
-            </p>
+            @if (post.pending) {
+              <div class="flex w-52 flex-col gap-4">
+                <p>Saving your post...</p>
+                <div class="skeleton h-4 w-28"></div>
+                <div class="skeleton h-4 w-full"></div>
+                <div class="skeleton h-4 w-full"></div>
+              </div>
+            } @else {
+              <p>
+                <span class="font-bold">Posted By: </span>
+                <a
+                  class="link"
+                  routerLink="."
+                  [queryParams]="{ filter: post.postedBy }"
+                >
+                  {{ post.postedBy }}
+                </a>
+              </p>
+              <p>
+                {{ post.datePosted | date: 'medium' }}
+                <span class="text-sm   from-neutral-100 font-extralight">
+                  (<app-relative-time [date]="post.datePosted" />)
+                </span>
+              </p>
+            }
           </div>
         </div>
       }
@@ -88,7 +97,7 @@ export class ListComponent {
   }
 
   doThisThing() {
-    const api = inject(PostApi);
+    //const api = inject(PostApi);
     // this is an example if in a weird case you want to subscribe somewhere
     // other than in the constructor of using takeUntilDestoyed with a destroyref
     this.route.queryParamMap

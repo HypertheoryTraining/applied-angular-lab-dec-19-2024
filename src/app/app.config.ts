@@ -4,12 +4,11 @@ import {
   provideRouter,
   withComponentInputBinding,
   withPreloading,
-  withViewTransitions,
 } from '@angular/router';
 
-import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { FeaturesService } from '@shared';
+import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
-      withViewTransitions(),
+      // withViewTransitions(),
       withPreloading(PreloadAllModules),
     ),
   ],

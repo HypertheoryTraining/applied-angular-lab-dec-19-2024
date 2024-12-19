@@ -13,6 +13,7 @@ import { FeatureDirective } from '@shared';
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
+          <li><a routerLink="books">Books</a></li>
           <li><a routerLink="news">News</a></li>
           <li><a routerLink="golf">Golf</a></li>
           <li><a routerLink="counter">Counter</a></li>
