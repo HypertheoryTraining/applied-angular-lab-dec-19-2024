@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, resource } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  resource,
+  computed,
+} from '@angular/core';
 
 export type BookEntity = {
   author: string;
@@ -9,7 +14,7 @@ export type BookEntity = {
   pages: number;
   title: string;
   year: number;
-  id: string;
+  id: number;
 };
 
 export type BookApiResponse = {
@@ -22,18 +27,17 @@ export type BookApiResponse = {
   imports: [],
   template: `
     <div class="overflow-x-auto">
-      <table class="table">
+      <table class="table table-zebra">
         <thead>
           <tr>
-            <th></th>
-            <th>Id</th>
-            <th>Tile</th>
-            <th>Author</th>
-            <th>Year</th>
+            <th (click)="sortBooks('id')">Id</th>
+            <th (click)="sortBooks('title')">Tile</th>
+            <th (click)="sortBooks('author')">Author</th>
+            <th (click)="sortBooks('year')">Year</th>
           </tr>
         </thead>
         <tbody>
-          @for (book of books.value(); track book.id) {
+          @for (book of sortedBooks(); track book.id) {
             <tr>
               <td>{{ book.id }}</td>
               <td>{{ book.title }}</td>
@@ -54,4 +58,28 @@ export class ListComponent {
         .then((res) => res.json())
         .then((r: BookApiResponse) => r.data),
   });
+  sortColumn: keyof BookEntity = 'id';
+  sortDirection = true;
+  //   sortedBooks = signal<BookEntity[]>(this.books.value() ?? []);
+  sortedBooks = computed(() => this.sortBooks(this.sortColumn));
+
+  sortBooks(column: keyof BookEntity) {
+    if (this.sortColumn === column) {
+      this.sortDirection = !this.sortDirection;
+    }
+    this.sortColumn = column;
+    return this.books.value()?.sort((a, b) => {
+      if (column === 'id' || column === 'year') {
+        return this.sortDirection
+          ? Number(a[column]) - Number(b[column])
+          : Number(b[column]) - Number(a[column]);
+      }
+
+      if (this.sortDirection) {
+        return a[column] > b[column] ? 1 : -1;
+      } else {
+        return a[column] < b[column] ? 1 : -1;
+      }
+    });
+  }
 }
