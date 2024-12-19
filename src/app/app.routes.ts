@@ -21,6 +21,11 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'books',
+    loadChildren: () =>
+      import('./areas/books/books.routes').then((r) => r.BOOKS_ROUTES),
+  },
+  {
     path: 'golf',
     loadChildren: () =>
       import('./areas/golf/golf.routes').then((r) => r.GOLF_ROUTES),
