@@ -40,4 +40,11 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'redocounter',
+    loadChildren: () =>
+      import('./redoCounter/redocounter.routes').then(
+        (r) => r.ROUTES_REDOCOUNTER,
+      ),
+  },
 ];
