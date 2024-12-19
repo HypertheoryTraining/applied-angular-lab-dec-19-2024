@@ -9,7 +9,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { RelativeTimeComponent } from '@shared';
 import { map } from 'rxjs';
-import { PostApi } from '../services/post-api';
 import { PostsStore } from '../services/post-store';
 @Component({
   selector: 'app-lrc-list',
@@ -92,7 +91,7 @@ export class ListComponent {
   }
 
   doThisThing() {
-    const api = inject(PostApi);
+    //const api = inject(PostApi);
     // this is an example if in a weird case you want to subscribe somewhere
     // other than in the constructor of using takeUntilDestoyed with a destroyref
     this.route.queryParamMap
