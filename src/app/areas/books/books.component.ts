@@ -8,6 +8,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   template: `
     <div class="flex gap-4">
       <button class="btn btn-neutral" routerLink=".">Books List</button>
+      <button class="btn btn-neutral" routerLink="stats">Stats</button>
       <button class="btn btn-neutral" routerLink="prefs">Prefs</button>
     </div>
     <router-outlet></router-outlet>

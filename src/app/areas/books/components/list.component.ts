@@ -13,7 +13,7 @@ import { BOOKS_API_GET } from '../services/books.api';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
   template: `
-    <div>
+    <!-- <div>
       <select>
         @for (book of this.books.value(); track book.id) {
           <option [value]="book">
@@ -22,6 +22,31 @@ import { BOOKS_API_GET } from '../services/books.api';
           </option>
         }
       </select>
+    </div> -->
+
+    <div>
+      <table class="table-zebra">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Year</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (book of this.books.value(); track book.id) {
+            <tr>
+              <td>
+                <a routerLink="">{{ book.title }}</a>
+              </td>
+              <td>{{ book.author }}</td>
+              <td>{{ book.year }}</td>
+              <td>{{ book.link }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
     </div>
   `,
   styles: ``,

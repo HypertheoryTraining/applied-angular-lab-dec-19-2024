@@ -7,4 +7,4 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   template: ` <p>Books Details Stuff</p> `,
   styles: ``,
 })
-export class DetailsComponent {}
+export class BookDetailsComponent {}
