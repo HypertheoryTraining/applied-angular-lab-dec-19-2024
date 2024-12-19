@@ -8,6 +8,14 @@ import { canMatchFeature } from '@shared';
 // Modes within our application.
 export const routes: Routes = [
   {
+    path: 'counter',
+    canMatch: [canMatchFeature('counter-redo')],
+    loadChildren: () =>
+      import('./areas/counter-redo/counter.routes').then(
+        (r) => r.COUNTER_ROUTES,
+      ),
+  },
+  {
     path: 'lrc',
     canMatch: [canMatchFeature('lrc')],
     loadChildren: () =>
