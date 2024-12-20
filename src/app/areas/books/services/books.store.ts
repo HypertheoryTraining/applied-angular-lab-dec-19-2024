@@ -10,14 +10,15 @@ import {
   withState,
 } from '@ngrx/signals';
 import { BooksApi } from './books.api';
-import { BooksApiResponse, BooksApiResponseItem } from '../types';
+import { BooksApiResponseItem } from '../types';
 import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
+import { sortOrder } from './books.service';
 
 type Sort = {
   sort: string | null;
-  ord: string | null;
+  ord: sortOrder | null;
 };
 
 type BooksStoreState = {

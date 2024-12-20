@@ -64,7 +64,11 @@ import { Router, RouterLink } from '@angular/router';
               </td>
               <td>{{ book.author }}</td>
               <td>{{ book.year }}</td>
-              <td>{{ book.link }}</td>
+              <td>
+                <a class="link" href="{{ book.link }}"
+                  >Probably goes to wikipedia</a
+                >
+              </td>
             </tr>
           }
         </tbody>
