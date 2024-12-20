@@ -1,13 +1,6 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  inject,
-  resource,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { BooksStore } from '../services/books.store';
-import { BooksApiResponse } from '../types';
-import { BOOKS_API_GET } from '../services/books.api';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-books-list',
@@ -33,7 +26,16 @@ import { Router, RouterLink } from '@angular/router';
               <a
                 class="link"
                 routerLink="."
-                [queryParams]="{ sort: 'title', ord: 'asc' }"
+                [queryParams]="{
+                  sort: 'title',
+                  order: booksStore.sort.order(),
+                }"
+                (click)="
+                  booksStore.updateSort({
+                    by: 'title',
+                    order: booksStore.sort.order(),
+                  })
+                "
                 >Title</a
               >
             </th>
@@ -41,7 +43,7 @@ import { Router, RouterLink } from '@angular/router';
               <a
                 class="link"
                 routerLink="."
-                [queryParams]="{ sort: 'author', ord: 'asc' }"
+                [queryParams]="{ sort: 'author', order: 'asc' }"
                 >Author</a
               >
             </th>
@@ -49,7 +51,7 @@ import { Router, RouterLink } from '@angular/router';
               <a
                 class="link"
                 routerLink="."
-                [queryParams]="{ sort: 'year', ord: 'asc' }"
+                [queryParams]="{ sort: 'year', order: 'asc' }"
                 >Year</a
               >
             </th>

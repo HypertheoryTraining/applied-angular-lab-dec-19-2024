@@ -1,44 +1,51 @@
-import { inject, signal } from '@angular/core';
-import { BooksStore } from './books.store';
+import { signal } from '@angular/core';
 import { BooksApiResponseItem } from '../types';
 
-export type sortOrder = 'asc' | 'desc' | 'nope';
+export type SortOrder = 'asc' | 'desc' | 'nope';
+export type Sort = {
+  by: string | null;
+  order: SortOrder;
+};
+
 export class BooksService {
-  store = inject(BooksStore);
-  books = this.store.books;
-  sortOrder = signal<sortOrder>('nope');
+  sortOrder = signal<SortOrder>('nope');
 
-  booksByYear(ord: string): BooksApiResponseItem[] {
-    return this.books().sort((a, b) =>
-      ord === 'desc' ? b.year - a.year : a.year - b.year,
+  booksByYear(
+    books: BooksApiResponseItem[],
+    order: string,
+  ): BooksApiResponseItem[] {
+    return books.sort((a, b) =>
+      order === 'desc' ? b.year - a.year : a.year - b.year,
     );
   }
 
-  booksByAuthor(ord: string): BooksApiResponseItem[] {
-    return this.books().sort((a, b) =>
-      this.compareStrings(a.author, b.author, ord),
-    );
+  booksByAuthor(
+    books: BooksApiResponseItem[],
+    order: string,
+  ): BooksApiResponseItem[] {
+    return books.sort((a, b) => this.compareStrings(a.author, b.author, order));
   }
 
-  booksByTitle(ord: string): BooksApiResponseItem[] {
-    return this.books().sort((a, b) =>
-      this.compareStrings(a.title, b.title, ord),
-    );
+  booksByTitle(
+    books: BooksApiResponseItem[],
+    order: string,
+  ): BooksApiResponseItem[] {
+    return books.sort((a, b) => this.compareStrings(a.title, b.title, order));
   }
 
   private compareStrings(
     compareStringA: string,
     compareStringB: string,
-    ord: string,
+    order: string,
   ): number {
     const a = compareStringA.toUpperCase();
     const b = compareStringB.toUpperCase();
 
     if (a > b) {
-      return ord === 'desc' ? -1 : 1;
+      return order === 'desc' ? -1 : 1;
     }
     if (b > a) {
-      return ord === 'desc' ? 1 : -1;
+      return order === 'desc' ? 1 : -1;
     }
     return 0;
   }

@@ -5,10 +5,11 @@ import { ListComponent } from './components/list.component';
 import { BooksStore } from './services/books.store';
 import { BooksApi } from './services/books.api';
 import { StatsComponent } from './components/stats.component';
+import { BooksService } from './services/books.service';
 export const BOOKS_ROUTES: Routes = [
   {
     path: '',
-    providers: [BooksStore, BooksApi],
+    providers: [BooksStore, BooksApi, BooksService],
     component: BooksComponent,
     children: [
       {
@@ -24,7 +25,7 @@ export const BOOKS_ROUTES: Routes = [
         component: StatsComponent,
       },
       {
-        path: 'books?sort=:sort&ord=:ord',
+        path: 'books?sort=:sort&order=:order',
         component: ListComponent,
       },
     ],

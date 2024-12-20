@@ -14,26 +14,30 @@ import { BooksApiResponseItem } from '../types';
 import { addEntities, withEntities } from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
-import { sortOrder } from './books.service';
-
-type Sort = {
-  sort: string | null;
-  ord: sortOrder | null;
-};
+import { BooksService, SortOrder, Sort } from './books.service';
 
 type BooksStoreState = {
-  sort: Sort | null;
+  sort: Sort;
 };
 
 export const BooksStore = signalStore(
   withDevtools('books'),
   withState<BooksStoreState>({
-    sort: null,
+    sort: { by: 'title', order: 'asc' },
   }),
   withEntities({ collection: '_books', entity: type<BooksApiResponseItem>() }),
   withMethods((store) => {
     const booksApi = inject(BooksApi);
     return {
+      updateSort: (sortRequested: Sort) => {
+        console.log(sortRequested);
+        patchState(store, {
+          sort: {
+            by: sortRequested.by,
+            order: nextSortOrder(store.sort(), sortRequested.by as string),
+          },
+        });
+      },
       _load: rxMethod<void>(
         pipe(
           switchMap(() =>
@@ -53,13 +57,17 @@ export const BooksStore = signalStore(
     };
   }),
   withComputed((store) => {
+    const bookSortService = inject(BooksService);
     return {
-      books: computed(() => store._booksEntities()),
+      books: computed(() =>
+        sortBooks(bookSortService, store._booksEntities(), store.sort()),
+      ),
       numberOfBooks: computed(() => store._booksIds().length),
-      booksByDate: computed(() => booksByDate(store._booksEntities())),
-      eldestBook: computed(() => booksByDate(store._booksEntities())[0]),
+      eldestBook: computed(
+        () => bookSortService.booksByYear(store._booksEntities(), 'asc')[0],
+      ),
       youngestBook: computed(
-        () => booksByDate(store._booksEntities())[store._booksIds.length - 1],
+        () => bookSortService.booksByYear(store._booksEntities(), 'desc')[0],
       ),
       averagePages: computed(() => {
         const books = store._booksEntities();
@@ -76,8 +84,44 @@ export const BooksStore = signalStore(
   }),
 );
 
-export function booksByDate(
+export function nextSortOrder(
+  currentSort: Sort,
+  requestedSortBy: string,
+): SortOrder {
+  if (currentSort.by !== requestedSortBy) {
+    return 'asc';
+  }
+  console.log(currentSort.by);
+  console.log(currentSort.order);
+  console.log(requestedSortBy);
+  switch (currentSort.by) {
+    case 'asc':
+      return 'desc';
+    case 'desc':
+      return 'nope';
+    case 'nope':
+      return 'asc';
+    default:
+      return 'nope';
+  }
+}
+
+export function sortBooks(
+  booksService: BooksService,
   books: BooksApiResponseItem[],
+  sort: Sort,
 ): BooksApiResponseItem[] {
-  return books.sort((a, b) => a.year - b.year);
+  if (sort.by === null || sort.order === null) {
+    return books;
+  }
+  switch (sort.by) {
+    case 'year':
+      return booksService.booksByYear(books, sort.order);
+    case 'author':
+      return booksService.booksByAuthor(books, sort.order);
+    case 'title':
+      return booksService.booksByTitle(books, sort.order);
+    default:
+      return books;
+  }
 }

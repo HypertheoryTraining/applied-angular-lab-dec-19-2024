@@ -1,12 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  resource,
-  inject,
-  computed,
-} from '@angular/core';
-import { BOOKS_API_GET } from '../services/books.api';
-import { BooksApiResponse } from '../types';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { BooksStore } from '../services/books.store';
 
 @Component({
@@ -15,38 +7,12 @@ import { BooksStore } from '../services/books.store';
   imports: [],
   template: `
     <p>Number of Books: {{ booksStore.numberOfBooks() }}</p>
-    <p>The eldest of books: {{ booksStore.eldestBook()?.title }}</p>
-    <p>The youngest of books: {{ booksStore.youngestBook()?.title }}</p>
+    <p>The eldest of books: {{ booksStore.eldestBook().title }}</p>
+    <p>The youngest of books: {{ booksStore.youngestBook().title }}</p>
     <p>Average pages: {{ booksStore.averagePages() }}</p>
   `,
   styles: ``,
 })
 export class StatsComponent {
   booksStore = inject(BooksStore);
-
-  books = resource<BooksApiResponse, unknown>({
-    loader: () =>
-      fetch(BOOKS_API_GET)
-        .then((r) => r.json())
-        .then((r) => r.data),
-  });
-
-  // numberOfBooks = computed(() => this.books.value()?.data?.length);
-  // booksByDate = computed(() =>
-  //   this.books.value()?.sort((a, b) => a.year - b.year),
-  // );
-  // eldestBook = computed(() =>
-  //   (this.numberOfBooks() ?? 0) > 0 ? this.booksByDate()?.[0] : null,
-  // );
-  // youngestBook = computed(() =>
-  //   (this.numberOfBooks() ?? 0) > 0
-  //     ? this.booksByDate()?.[(this.numberOfBooks() ?? 1) - 1]
-  //     : null,
-  // );
-  // averagePages = computed(() => {
-  //   const books = this.books.value();
-  //   return books
-  //     ? books.reduce((acc, book) => acc + book.pages, 0) / books.length
-  //     : 0;
-  // });
 }
