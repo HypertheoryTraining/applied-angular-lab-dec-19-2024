@@ -1,10 +1,10 @@
 import {
-  Component,
   ChangeDetectionStrategy,
-  resource,
+  Component,
   computed,
+  inject,
 } from '@angular/core';
-import { BookApiResponse, BookEntity } from './list.component';
+import { BooksStore } from '../services/books-store';
 
 @Component({
   selector: 'app-stats',
@@ -21,35 +21,29 @@ import { BookApiResponse, BookEntity } from './list.component';
   styles: ``,
 })
 export class StatsComponent {
-  books = resource<BookEntity[], unknown>({
-    loader: () =>
-      fetch('/api/books')
-        .then((res) => res.json())
-        .then((r: BookApiResponse) => r.data),
+  store = inject(BooksStore);
+  books = this.store.books;
+
+  totalBooks = computed(() => this.books().length);
+
+  earlistBook = computed(() => {
+    return this.books().reduce(
+      (minYear, book) => (book.year < minYear ? book.year : minYear),
+      this.books()?.[0]?.year,
+    );
   });
 
-  totalBooks = computed(() => this.books.value()?.length);
-  earlistBook = computed(() => {
-    return this.books
-      .value()
-      ?.reduce(
-        (minYear, book) => (book.year < minYear ? book.year : minYear),
-        this.books.value()?.[0]?.year ?? 0,
-      );
-  });
   newestBook = computed(() => {
-    return this.books
-      .value()
-      ?.reduce(
-        (maxYear, book) => (book.year > maxYear ? book.year : maxYear),
-        this.books.value()?.[0]?.year ?? 0,
-      );
+    return this.books().reduce(
+      (maxYear, book) => (book.year > maxYear ? book.year : maxYear),
+      this.books()?.[0]?.year,
+    );
   });
 
   avergaePages = computed(() => {
     return Math.round(
-      (this.books.value()?.reduce((total, book) => total + book.pages, 0) ??
-        1) / (this.totalBooks() ?? 1),
+      this.books().reduce((total, book) => total + book.pages, 0) /
+        this.totalBooks(),
     );
   });
 }
