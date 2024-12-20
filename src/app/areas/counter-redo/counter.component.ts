@@ -6,9 +6,12 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, RouterOutlet],
   template: `
+    <div>Counter Stuff Goes Here</div>
     <div>
-      Counter Stuff Goes Here
       <a routerLink="ui">UI</a>
+    </div>
+    <div>
+      <a routerLink="prefs">Prefs</a>
     </div>
     <router-outlet />
   `,
