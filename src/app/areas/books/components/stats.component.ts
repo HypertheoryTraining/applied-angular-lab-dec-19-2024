@@ -14,10 +14,10 @@ import { BooksStore } from '../services/books.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
   template: `
-    <p>Number of Books: {{ numberOfBooks() }}</p>
-    <p>The eldest of books: {{ eldestBook()?.title }}</p>
-    <p>The youngest of books: {{ youngestBook()?.title }}</p>
-    <p>Average pages: {{ averagePages() }}</p>
+    <p>Number of Books: {{ booksStore.numberOfBooks() }}</p>
+    <p>The eldest of books: {{ booksStore.eldestBook()?.title }}</p>
+    <p>The youngest of books: {{ booksStore.youngestBook()?.title }}</p>
+    <p>Average pages: {{ booksStore.averagePages() }}</p>
   `,
   styles: ``,
 })
@@ -31,22 +31,22 @@ export class StatsComponent {
         .then((r) => r.data),
   });
 
-  numberOfBooks = computed(() => this.books.value()?.length);
-  booksByDate = computed(() =>
-    this.books.value()?.sort((a, b) => a.year - b.year),
-  );
-  eldestBook = computed(() =>
-    (this.numberOfBooks() ?? 0) > 0 ? this.booksByDate()?.[0] : null,
-  );
-  youngestBook = computed(() =>
-    (this.numberOfBooks() ?? 0) > 0
-      ? this.booksByDate()?.[(this.numberOfBooks() ?? 1) - 1]
-      : null,
-  );
-  averagePages = computed(() => {
-    const books = this.books.value();
-    return books
-      ? books.reduce((acc, book) => acc + book.pages, 0) / books.length
-      : 0;
-  });
+  // numberOfBooks = computed(() => this.books.value()?.data?.length);
+  // booksByDate = computed(() =>
+  //   this.books.value()?.sort((a, b) => a.year - b.year),
+  // );
+  // eldestBook = computed(() =>
+  //   (this.numberOfBooks() ?? 0) > 0 ? this.booksByDate()?.[0] : null,
+  // );
+  // youngestBook = computed(() =>
+  //   (this.numberOfBooks() ?? 0) > 0
+  //     ? this.booksByDate()?.[(this.numberOfBooks() ?? 1) - 1]
+  //     : null,
+  // );
+  // averagePages = computed(() => {
+  //   const books = this.books.value();
+  //   return books
+  //     ? books.reduce((acc, book) => acc + book.pages, 0) / books.length
+  //     : 0;
+  // });
 }

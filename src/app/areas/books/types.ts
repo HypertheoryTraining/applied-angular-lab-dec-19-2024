@@ -9,4 +9,4 @@ export type BooksApiResponseItem = {
   imageLink: string;
   link: string;
 };
-export type BooksApiResponse = BooksApiResponseItem[];
+export type BooksApiResponse = { data: BooksApiResponseItem[] };

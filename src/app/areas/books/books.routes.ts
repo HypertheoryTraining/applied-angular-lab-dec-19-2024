@@ -23,6 +23,10 @@ export const BOOKS_ROUTES: Routes = [
         path: 'stats',
         component: StatsComponent,
       },
+      {
+        path: 'books?sort=:sort&ord=:ord',
+        component: ListComponent,
+      },
     ],
   },
 ];
