@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { BooksStore, ColumnPrefs } from '../services/books-store';
-import { BookEntity } from '../types';
+
 
 @Component({
   selector: 'app-list',
