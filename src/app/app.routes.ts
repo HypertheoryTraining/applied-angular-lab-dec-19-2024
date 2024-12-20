@@ -15,11 +15,27 @@ export const routes: Routes = [
   },
   {
     path: 'counter',
+    canMatch: [canMatchFeature('counter-redo')],
+    loadChildren: () =>
+      import('./areas/counter-redo/counter.routes').then(
+        (r) => r.COUNTER_ROUTES,
+      ),
+  },
+  {
+    path: 'counter',
     loadChildren: () =>
       import('./areas/counter-lab/counter.routes').then(
         (r) => r.COUNTER_ROUTES,
       ),
   },
+  /*  {
+    path: 'counter',
+    canMatch: [canMatchFeature('counter-redo')],
+    loadChildren: () =>
+      import('./areas/counter-redo/counter.routes').then(
+        (r) => r.COUNTER_ROUTES,
+      ),
+  },*/
   {
     path: 'golf',
     loadChildren: () =>
