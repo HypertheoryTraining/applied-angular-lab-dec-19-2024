@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
-import { withComputed } from '@ngrx/signals';
+//import { withComputed } from '@ngrx/signals';
 
 @Component({
   selector: 'app-ui',
@@ -17,6 +17,7 @@ import { withComputed } from '@ngrx/signals';
       <span data-testid="current">{{ current() }}</span>
       <button class="btn btn-primary" (click)="add()">+</button>
     </div>
+    <span data-testid="fizzBuzz">{{ displayFizzBuzz() }}</span>
   `,
   styles: ``,
 })
@@ -28,14 +29,18 @@ export class UiComponent {
     this.current.set(this.current() + 1);
   }
   minus() {
-    console.log(this.isDisabled);
     this.current.update((j) => j - 1);
-    //this.shouldDisable();
   }
   shouldDisable() {
-    console.log(this.current());
-    //this.isDisabled.set(this.current() === 0);
-    //this.isDisabled = this.current() === 0;
     return this.current() === 0;
+  }
+  displayFizzBuzz() {
+    const curVal = this.current();
+    if (curVal === 0) return '';
+    if (curVal % 3 === 0 && curVal % 5 === 0) return 'FizzBuzz';
+    if (curVal % 3 === 0) return 'Fizz';
+    if (curVal % 5 === 0) return 'Buzz';
+
+    return '';
   }
 }
