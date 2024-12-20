@@ -4,6 +4,7 @@ import { ReadArticleStore } from './areas/news/services/read-articles.store';
 import { NewsListComponent } from './areas/news/components/news-list.component';
 import { HistoryComponent } from './areas/news/components/history.component';
 import { canMatchFeature } from '@shared';
+//import { CounterStore1 } from './areas/counter-redo/services/counter.store';
 
 // Modes within our application.
 export const routes: Routes = [
@@ -15,6 +16,7 @@ export const routes: Routes = [
   },
   {
     path: 'counter',
+    //providers: [CounterStore1],
     canMatch: [canMatchFeature('counter-redo')],
     loadChildren: () =>
       import('./areas/counter-redo/counter.routes').then(

@@ -1,4 +1,12 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+/*import {
+  Component,
+  ChangeDetectionStrategy,
+  signal,
+  inject,
+} from '@angular/core';
+ */
+import { CounterStore1 } from '../services/counter.store';
 //import { types } from 'util';
 
 //export const BY_VALUES = [1, 3, 5] as const;
@@ -35,12 +43,15 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
   styles: ``,
 })
 export class PrefsComponent {
+  store = inject(CounterStore1);
   selectedPreference = '';
   selectOption(value: string) {
     //console.log(event?.target.value);
     //return "";
     this.selectedPreference = value;
-    console.log(value);
+    this.store.setPrefValue(Number(value));
+    //console.log(value);
+    console.log(this.store.prefValue()); //Number(value));
   }
   preferencesList = [1, 3, 5, 7];
   //pref = signal<this.preferencesList>();

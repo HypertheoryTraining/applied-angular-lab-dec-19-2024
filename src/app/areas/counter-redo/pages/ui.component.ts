@@ -4,7 +4,7 @@ import {
   signal,
   inject,
 } from '@angular/core';
-import { CounterStore } from '../services/counter.store';
+import { CounterStore1 } from '../services/counter.store';
 //import { withComputed } from '@ngrx/signals';
 
 @Component({
@@ -15,39 +15,20 @@ import { CounterStore } from '../services/counter.store';
     <div>
       <button
         class="btn btn-primary"
-        (click)="minus()"
-        [disabled]="shouldDisable()"
+        (click)="store.minus()"
+        [disabled]="this.store.isDecrementDisabled()"
       >
         -
       </button>
       <span data-testid="current">{{ store.current() }}</span>
-      <button class="btn btn-primary" (click)="add()">+</button>
+      <button class="btn btn-primary" (click)="store.add()">+</button>
     </div>
-    <span data-testid="fizzBuzz">{{ displayFizzBuzz() }}</span>
+    <span data-testid="fizzBuzz">{{
+      this.store.DisplayfizzBuzzMessage()
+    }}</span>
   `,
   styles: ``,
 })
 export class UiComponent {
-  store = inject(CounterStore);
-  current = signal(0);
-  isDisabled = false;
-
-  add() {
-    this.current.set(this.current() + 1);
-  }
-  minus() {
-    this.current.update((j) => j - 1);
-  }
-  shouldDisable() {
-    return this.current() === 0;
-  }
-  displayFizzBuzz() {
-    const curVal = this.current();
-    if (curVal === 0) return '';
-    if (curVal % 3 === 0 && curVal % 5 === 0) return 'FizzBuzz';
-    if (curVal % 3 === 0) return 'Fizz';
-    if (curVal % 5 === 0) return 'Buzz';
-
-    return '';
-  }
+  store = inject(CounterStore1);
 }
