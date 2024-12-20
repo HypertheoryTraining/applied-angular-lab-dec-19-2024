@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 //import { types } from 'util';
 
-export const BY_VALUES = [1, 3, 5] as const;
-type ByValues = (typeof BY_VALUES)[number]; // createa  type like 1 | 3 | 5
+//export const BY_VALUES = [1, 3, 5] as const;
+//type ByValues = (typeof BY_VALUES)[number]; // createa  type like 1 | 3 | 5
 
 @Component({
   selector: 'app-prefs',
@@ -43,4 +43,5 @@ export class PrefsComponent {
     console.log(value);
   }
   preferencesList = [1, 3, 5, 7];
+  //pref = signal<this.preferencesList>();
 }

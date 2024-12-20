@@ -1,4 +1,10 @@
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  signal,
+  inject,
+} from '@angular/core';
+import { CounterStore } from '../services/counter.store';
 //import { withComputed } from '@ngrx/signals';
 
 @Component({
@@ -14,7 +20,7 @@ import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
       >
         -
       </button>
-      <span data-testid="current">{{ current() }}</span>
+      <span data-testid="current">{{ store.current() }}</span>
       <button class="btn btn-primary" (click)="add()">+</button>
     </div>
     <span data-testid="fizzBuzz">{{ displayFizzBuzz() }}</span>
@@ -22,6 +28,7 @@ import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
   styles: ``,
 })
 export class UiComponent {
+  store = inject(CounterStore);
   current = signal(0);
   isDisabled = false;
 
