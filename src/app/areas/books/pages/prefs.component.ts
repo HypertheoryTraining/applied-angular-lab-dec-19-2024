@@ -7,6 +7,7 @@ import { BooksStore } from '../services/books-store';
   imports: [],
   template: `
     <div class="max-w-md mx-auto">
+      <div class="stat-value text-primary text-lg">Sort By:</div>
       <div id="count-tab" role="tablist" class="tabs tabs-boxed ">
         @for (option of store.columnPrefs(); track option) {
           @if (option === store.column()) {

@@ -12,6 +12,10 @@ export const COUNTER_ROUTES: Routes = [
     component: CounterComponent,
     children: [
       {
+        path: '',
+        component: UiComponent,
+      },
+      {
         path: 'ui',
         component: UiComponent,
       },

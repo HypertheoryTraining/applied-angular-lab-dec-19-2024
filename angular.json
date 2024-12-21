@@ -51,7 +51,9 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/favicon.ico",
+              "src/images"
             ],
             "styles": [
               "src/styles.css"
@@ -79,7 +81,12 @@
               "extractLicenses": false,
               "sourceMap": true,
               "assets": [
-                "src/mockServiceWorker.js"
+                "src/mockServiceWorker.js",
+                "src/images",
+                {
+                  "glob": "**/*",
+                  "input": "public"
+                }
               ]
             }
           },

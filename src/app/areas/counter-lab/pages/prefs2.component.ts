@@ -6,7 +6,7 @@ import { CounterStore } from '../services/counter-store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
   template: ` <select class="select">
-    @for (by of store.byValues(); track by) {
+    @for (by of store.countOptions(); track by) {
       <option [value]="by">{{ by }}</option>
     }
   </select>`,

@@ -11,11 +11,32 @@ import { BooksStore } from '../services/books-store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
   template: `
-    <div class="bg-base-200 p-4">
-      <div>Total Books: {{ totalBooks() }}</div>
-      <div>Oldest Published: {{ earlistBook() }}</div>
-      <div>Newest Published: {{ newestBook() }}</div>
-      <div>Average Pages: {{ avergaePages() }}</div>
+    <div class="flex flex-col items-center">
+      <div class="stat-value text-primary text-xl">Stats:</div>
+      <div class="stats stats-vertical shadow bg-base-200">
+        <div class="stat">
+          <div class="stat-title">Total Books:</div>
+          <div class="stat-value text-primary">{{ totalBooks() }}</div>
+          <div class="stat-desc">Every book every written!</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Oldest Published:</div>
+          <div class="stat-value text-primary">{{ earlistBook() }}</div>
+          <div class="stat-desc">{{ earlistBook() < 0 ? 'BC' : 'AD' }}</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-title">Newest Published:</div>
+          <div class="stat-value text-primary">{{ newestBook() }}</div>
+          <div class="stat-desc">{{ newestBook() < 0 ? 'BC' : 'AD' }}</div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Average Length:</div>
+          <div class="stat-value text-primary">{{ avergaePages() }}</div>
+          <div class="stat-desc">Page Count</div>
+        </div>
+      </div>
     </div>
   `,
   styles: ``,

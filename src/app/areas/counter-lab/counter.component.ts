@@ -6,9 +6,11 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, RouterOutlet],
   template: `
-    <div class="flex gap-4">
-      <a routerLink="ui">UI</a>
-      <a routerLink="prefs">Prefs</a>
+    <div class="flex flex-col items-center my-3">
+      <div class="join">
+        <a class="join-item btn" routerLink="ui">UI</a>
+        <a class="join-item btn" routerLink="prefs">Prefs</a>
+      </div>
     </div>
     <router-outlet />
   `,

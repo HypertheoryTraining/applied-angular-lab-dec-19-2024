@@ -1,9 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  input,
-  effect,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -20,6 +15,6 @@ export class DetailsComponent {
   id = input<string>();
 
   constructor() {
-    effect(() => console.log(this.id()));
+    //effect(() => console.log(this.id()));
   }
 }

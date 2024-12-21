@@ -5,6 +5,7 @@ import { StatsComponent } from './pages/stats.component';
 import { PrefsComponent } from './pages/prefs.component';
 import { BooksStore } from './services/books-store';
 import { BookApi } from './services/book-api';
+import { DetailsComponent } from './pages/details.component';
 export const BOOKS_ROUTES: Routes = [
   {
     path: '',
@@ -12,7 +13,11 @@ export const BOOKS_ROUTES: Routes = [
     providers: [BooksStore, BookApi],
     children: [
       {
-        path: 'list',
+        path: '',
+        component: ListComponent,
+      },
+      {
+        path: '',
         component: ListComponent,
       },
       {
@@ -22,6 +27,10 @@ export const BOOKS_ROUTES: Routes = [
       {
         path: 'prefs',
         component: PrefsComponent,
+      },
+      {
+        path: 'details/:id',
+        component: DetailsComponent,
       },
     ],
   },

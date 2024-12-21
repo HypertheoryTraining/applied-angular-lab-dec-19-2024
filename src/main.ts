@@ -6,9 +6,10 @@ import { isDevMode } from '@angular/core';
 async function prepareApp() {
   if (isDevMode()) {
     const { worker } = await import('./mocks/browser');
+
     return worker.start({
       onUnhandledRequest: 'bypass',
-      quiet: false,
+      quiet: true,
     });
   }
   return Promise.resolve();
@@ -16,6 +17,6 @@ async function prepareApp() {
 
 prepareApp().then(() => {
   bootstrapApplication(AppComponent, appConfig).catch((err) =>
-    console.error(err)
+    console.error(err),
   );
 });

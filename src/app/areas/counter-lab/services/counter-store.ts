@@ -1,62 +1,53 @@
+import {
+  withDevtools,
+  withStorageSync,
+} from '@angular-architects/ngrx-toolkit';
 import { computed } from '@angular/core';
 import {
   patchState,
   signalStore,
-  watchState,
   withComputed,
-  withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
-export const BY_VALUES = [1, 3, 5] as const;
-type ByValues = (typeof BY_VALUES)[number]; // createa  type like 1 | 3 | 5
+
+export const COUNT_OPTIONS = [1, 3, 5] as const;
+type CountOptions = (typeof COUNT_OPTIONS)[number];
 
 type CounterState = {
-  current: number;
-  by: ByValues;
+  count: number;
+  countBy: CountOptions;
 };
+
 export const CounterStore = signalStore(
-  withState<CounterState>({ current: 0, by: 1 }),
+  withDevtools('counter'),
+  withStorageSync('counter'),
+  withState<CounterState>({ count: 0, countBy: 1 }),
   withMethods((store) => {
     return {
-      setBy: (by: ByValues) => patchState(store, { by }),
       increment: () =>
-        patchState(store, { current: store.current() + store.by() }),
+        patchState(store, { count: store.count() + store.countBy() }),
       decrement: () =>
-        patchState(store, { current: store.current() - store.by() }),
+        patchState(store, {
+          count:
+            store.count() - store.countBy() <= 0
+              ? 0
+              : store.count() - store.countBy(),
+        }),
+      setCountBy: (countBy: CountOptions) => patchState(store, { countBy }),
+      reset: () => patchState(store, { count: 0, countBy: 1 }),
     };
   }),
   withComputed((store) => {
     return {
-      byValues: computed(() => BY_VALUES),
-      decrementDisabled: computed(() => store.current() - store.by() < 0),
-      fizzBuzz: computed(() => fizzBuzzIfy(store.current())),
+      disableDecrement: computed(() => store.count() === 0),
+      fizzBuzz: computed(() =>
+        store.count() === 0
+          ? ''
+          : (store.count() % 3 === 0 ? 'Fizz' : '') +
+            (store.count() % 5 === 0 ? 'Buzz' : ''),
+      ),
+      countOptions: computed(() => COUNT_OPTIONS),
     };
   }),
-
-  withHooks({
-    onInit(store) {
-      const saved = localStorage.getItem('counter'); // json | null
-      if (saved !== null) {
-        const state = JSON.parse(saved) as unknown as CounterState; // I know you don't know what this is (unknown) I know it is CounterState
-        patchState(store, state);
-      }
-      watchState(store, (state) => {
-        const savedState = JSON.stringify(state);
-        localStorage.setItem('counter', savedState);
-      });
-    },
-  }),
 );
-
-export function fizzBuzzIfy(val: number): '' | 'Fizz' | 'Buzz' | 'FizzBuzz' {
-  const isFizz = (n: number) => n % 3 === 0;
-  const isBuzz = (n: number) => n % 5 === 0;
-  const isFizzBuzz = (n: number) => isFizz(n) && isBuzz(n);
-
-  if (val === 0) return '';
-  if (isFizzBuzz(val)) return 'FizzBuzz';
-  if (isFizz(val)) return 'Fizz';
-  if (isBuzz(val)) return 'Buzz';
-  return '';
-}

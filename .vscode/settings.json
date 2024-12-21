@@ -2,7 +2,6 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-
   "files.autoSave": "onFocusChange",
   "auto-rename-tag.activationOnLanguage": [
     "html",
@@ -21,10 +20,12 @@
   "editor.formatOnSave": true,
   "workbench.tree.indent": 19,
   "explorer.compactFolders": false,
-
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always",
     "source.format": "always"
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

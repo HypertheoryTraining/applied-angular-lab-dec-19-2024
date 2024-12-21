@@ -22,16 +22,18 @@ export type ColumnPrefs = (typeof COLUMN_PREFS)[number];
 type PrefsState = {
   column: keyof BookEntity;
   ascending: boolean;
+  id: number;
 };
 
 export const BooksStore = signalStore(
-  withState<PrefsState>({ column: 'id', ascending: true }),
+  withState<PrefsState>({ column: 'id', ascending: true, id: 0 }),
   withStorageSync('books-prefs'),
   withEntities({ collection: '_server', entity: type<BookEntity>() }),
   withMethods((store) => {
     const api = inject(BookApi);
     return {
       setColumnPref: (column: ColumnPrefs) => patchState(store, { column }),
+      setBookId: (id: number) => patchState(store, { id }),
       setDirection: (direction: boolean) =>
         patchState(store, { ascending: direction }),
       _load: rxMethod<void>(
@@ -77,6 +79,9 @@ export const BooksStore = signalStore(
             return a[column] < b[column] ? 1 : -1;
           }
         });
+      }),
+      selectedBook: computed(() => {
+        return store._serverEntities().find((b) => b.id === store.id());
       }),
     };
   }),
