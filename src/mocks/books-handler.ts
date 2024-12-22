@@ -11,11 +11,11 @@ const handlers = [
     const newBook = {
       ...body,
       id: String(books.length + 1),
-      imageLink: 'assets/images/placeholder.jpg',
-      language: 'English',
-      country: 'Unknown',
-      pages: 0,
-      link: '',
+      imageLink: body.imageLink || 'images/fizzbuzz.gif',
+      language: body.language || 'Unknown',
+      country: body.country || 'Unknown',
+      pages: body.pages || 0,
+      link: body.link || '',
       custom: true,
     };
     books.push(newBook);

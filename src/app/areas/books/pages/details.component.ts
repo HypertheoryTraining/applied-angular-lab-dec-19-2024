@@ -14,15 +14,17 @@ import { Router, RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink],
   template: `
-    <div class="flex flex-col justify-center items-center my-6">
+    <div
+      class="flex flex-col justify-center items-center my-6 join join-vertical"
+    >
       <div
-        class="card bg-base-200 shadow w-11/12 md:w-8/12 lg:w-6/12 flex flex-col md:flex-row"
+        class="card bg-base-200  w-11/12 md:w-8/12 lg:w-6/12 flex flex-col md:flex-row join-item"
       >
         <figure class="w-full md:w-6/12 h-[400px] md:h-auto">
           <img
             [src]="book()?.imageLink"
             alt="Book Cover"
-            class="object-cover w-full h-full"
+            class="object-cover w-full h-full "
           />
         </figure>
         <div class="card-body">
@@ -51,7 +53,9 @@ import { Router, RouterLink } from '@angular/router';
           </div>
         </div>
       </div>
-      <div class="flex my-6 bg-base-200 p-4 rounded-lg shadow-lg">
+      <div
+        class="flex justify-center  bg-base-200 w-11/12 md:w-8/12 lg:w-6/12 p-4 rounded-lg  join-item"
+      >
         <button
           class="btn btn-outline btn-circle btn-secondary mx-3"
           [disabled]="!hasPrevious()"

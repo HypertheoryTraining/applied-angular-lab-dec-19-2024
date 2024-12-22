@@ -4,6 +4,7 @@ import {
   provideRouter,
   withComponentInputBinding,
   withPreloading,
+  withViewTransitions,
 } from '@angular/router';
 
 import { provideHttpClient } from '@angular/common/http';
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
-      // withViewTransitions(),
+      withViewTransitions(),
       withPreloading(PreloadAllModules),
     ),
   ],

@@ -9,6 +9,7 @@ export type BookEntity = {
   year: number;
   id: number;
   custom?: boolean | false;
+  imageData?: string; // base64 maybe ? ¯\_(ツ)_/¯ we'll see
 };
 
 export type BookApiResponse = {
