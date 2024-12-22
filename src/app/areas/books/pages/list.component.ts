@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   imports: [RouterLink],
   template: `
     <div class="flex justify-center">
-      <div class="bg-base-200 p-4 mt-4 rounded-lg shadow-lg">
+      <div class="bg-base-200 p-4 rounded-lg shadow-lg">
         <div class="overflow-x-auto max-h-[80vh] max-w-[90vh] min-w-[70vw]">
           <table
             class="table table-zebra table-pin-rows bg-base-300  font-medium"
