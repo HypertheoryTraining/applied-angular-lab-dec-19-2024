@@ -6,6 +6,7 @@ import { PrefsComponent } from './pages/prefs.component';
 import { BooksStore } from './services/books-store';
 import { BookApi } from './services/book-api';
 import { DetailsComponent } from './pages/details.component';
+import { EntryComponent } from './components/entry.component';
 export const BOOKS_ROUTES: Routes = [
   {
     path: '',
@@ -31,6 +32,10 @@ export const BOOKS_ROUTES: Routes = [
       {
         path: 'details/:id',
         component: DetailsComponent,
+      },
+      {
+        path: 'entry',
+        component: EntryComponent,
       },
     ],
   },

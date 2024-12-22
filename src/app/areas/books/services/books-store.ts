@@ -10,7 +10,11 @@ import {
 
 import { withStorageSync } from '@angular-architects/ngrx-toolkit';
 import { computed, inject } from '@angular/core';
-import { addEntities, withEntities } from '@ngrx/signals/entities';
+import {
+  addEntities,
+  removeEntities,
+  withEntities,
+} from '@ngrx/signals/entities';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
 import { BookApi } from './book-api';
@@ -52,6 +56,36 @@ export const BooksStore = signalStore(
           ),
         ),
       ),
+      addBook: rxMethod<Partial<BookEntity>>(
+        pipe(
+          switchMap((book) =>
+            api
+              .addBook(book)
+              .pipe(
+                tap((newBook) =>
+                  patchState(
+                    store,
+                    addEntities([newBook], { collection: '_server' }),
+                  ),
+                ),
+              ),
+          ),
+        ),
+      ),
+      deleteBook: rxMethod<number>(
+        pipe(
+          switchMap((id) =>
+            api.deleteBook(id).pipe(
+              tap(() => {
+                patchState(
+                  store,
+                  removeEntities([id], { collection: '_server' }),
+                );
+              }),
+            ),
+          ),
+        ),
+      ),
     };
   }),
   withComputed((store) => {
@@ -73,10 +107,13 @@ export const BooksStore = signalStore(
               : Number(b[column]) - Number(a[column]);
           }
 
+          const aVal = a[column] ?? '';
+          const bVal = b[column] ?? '';
+
           if (store.ascending()) {
-            return a[column] > b[column] ? 1 : -1;
+            return aVal > bVal ? 1 : -1;
           } else {
-            return a[column] < b[column] ? 1 : -1;
+            return aVal < bVal ? 1 : -1;
           }
         });
       }),

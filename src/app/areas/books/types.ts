@@ -8,6 +8,7 @@ export type BookEntity = {
   title: string;
   year: number;
   id: number;
+  custom?: boolean | false;
 };
 
 export type BookApiResponse = {
